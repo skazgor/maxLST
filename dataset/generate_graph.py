@@ -147,4 +147,4 @@ def generate_incomplete_grid_graph(file_name : str, rows: int, cols: int, remova
 # generate_random_graph("random_graph.txt", 100, 0.1)
 # generate_random_d_regular_graph("random_d_regular_graph.txt", 100, 3)
 # generate_complete_grid_graph("complete_grid_graph.txt", 5, 5)
-generate_incomplete_grid_graph("incomplete_grid_graph.txt", 5, 5, 0.3)
+# generate_incomplete_grid_graph("incomplete_grid_graph.txt", 5, 5, 0.3)
