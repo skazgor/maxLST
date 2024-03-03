@@ -337,23 +337,30 @@ struct Graph{
     }
     
 };
+// int cnt = 0;
 int M_Algorithm(int root, Graph g){
+    // ++cnt;
+    // cout << cnt << endl;
     // cout << "test redu" << endl;
     g.reduction();
     // cout << "test redu end " << endl;
 
     if(g.check_if_connected(root) == false) return 0;
-    if(g.IN.size() + g.LN.size() == g.n) return g.LN.size();
+    if((int)g.IN.size() + (int)g.LN.size() == g.n) return g.LN.size();
     int mx = INT_MIN;
     int mxv = -1;
     for(auto e: g.BN){
         int tmp = g.deg(e);
-        if(g.deg(e) > mx){
-            mx = g.deg(e);
+        if(tmp > mx){
+            mx = tmp;
             mxv = e;
         }
     }
-    assert(mxv != -1);
+    if(mxv == -1){
+        // cout << g.BN.size() << endl;
+        // cout << "h/ere \n";
+        return 0;
+    }
     int neighbourcount = 0;
     for(auto x: g.g[mxv]){
         if(g.FL.find(x) != g.FL.end()) ++neighbourcount;
