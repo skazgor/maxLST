@@ -1,5 +1,13 @@
 import random
 import networkx as nx
+random.seed(42)
+
+def check_is_simple_and_connected(G: nx.Graph):
+    is_connected = nx.is_connected(G)
+    has_self_loops = any(u == v for u, v in G.edges())
+    has_parallel_edges = len(G.edges()) != len(set(G.edges()))
+    is_simple = not (has_self_loops or has_parallel_edges)
+    return is_connected and is_simple
 
 
 def generate_random_graph(file_name: str, N: int, p: float):
@@ -16,15 +24,17 @@ def generate_random_graph(file_name: str, N: int, p: float):
     """
     generated_graph = nx.erdos_renyi_graph(N, p)
 
-    fhand = open(file_name, "w")
-    fhand.write(
-        f"{generated_graph.number_of_nodes()} {generated_graph.number_of_edges()}\n"
-    )
-
-    for edge in generated_graph.edges():
-        fhand.write(f"{edge[0]} {edge[1]}\n")
-
-    fhand.close()
+    if check_is_simple_and_connected(generated_graph):
+        fhand = open(file_name, "w")
+        fhand.write(
+            f"{generated_graph.number_of_nodes()} {generated_graph.number_of_edges()}\n"
+        )
+        for edge in generated_graph.edges():
+            fhand.write(f"{edge[0]} {edge[1]}\n")
+        fhand.close()
+    
+    else:
+        print("Graph is not simple and connected.")
 
 
 def generate_scale_free_graph(file_name: str, N: int, m: int):
@@ -41,15 +51,18 @@ def generate_scale_free_graph(file_name: str, N: int, m: int):
     """
     generated_graph = nx.barabasi_albert_graph(100, 2)
 
-    fhand = open(file_name, "w")
-    fhand.write(
-        f"{generated_graph.number_of_nodes()} {generated_graph.number_of_edges()}\n"
-    )
+    if check_is_simple_and_connected(generated_graph):
+        fhand = open(file_name, "w")
+        fhand.write(
+            f"{generated_graph.number_of_nodes()} {generated_graph.number_of_edges()}\n"
+        )
 
-    for edge in generated_graph.edges():
-        fhand.write(f"{edge[0]} {edge[1]}\n")
+        for edge in generated_graph.edges():
+            fhand.write(f"{edge[0]} {edge[1]}\n")
+        fhand.close()
 
-    fhand.close()
+    else:
+        print("Graph is not simple and connected.")
 
 
 def generate_random_d_regular_graph(file_name: str, N: int, d: int):
@@ -69,15 +82,19 @@ def generate_random_d_regular_graph(file_name: str, N: int, d: int):
 
     generated_graph = nx.random_regular_graph(d, N)
 
-    fhand = open(file_name, "w")
-    fhand.write(
-        f"{generated_graph.number_of_nodes()} {generated_graph.number_of_edges()}\n"
-    )
+    if check_is_simple_and_connected(generated_graph):
+        fhand = open(file_name, "w")
+        fhand.write(
+            f"{generated_graph.number_of_nodes()} {generated_graph.number_of_edges()}\n"
+        )
 
-    for edge in generated_graph.edges():
-        fhand.write(f"{edge[0]} {edge[1]}\n")
+        for edge in generated_graph.edges():
+            fhand.write(f"{edge[0]} {edge[1]}\n")
 
-    fhand.close()
+        fhand.close()
+
+    else:
+        print("Graph is not simple and connected.")
 
 
 def generate_complete_grid_graph(file_name: str, rows: int, cols: int):
@@ -96,16 +113,17 @@ def generate_complete_grid_graph(file_name: str, rows: int, cols: int):
 
     grid_to_node_number = {node: i for i, node in enumerate(generated_graph.nodes())}
 
-    fhand = open(file_name, "w")
+    if check_is_simple_and_connected(generated_graph):
+        fhand = open(file_name, "w")
+        fhand.write(
+            f"{generated_graph.number_of_nodes()} {generated_graph.number_of_edges()}\n"
+        )
+        for edge in generated_graph.edges():
+            fhand.write(f"{grid_to_node_number[edge[0]]} {grid_to_node_number[edge[1]]}\n")
+        fhand.close()
 
-    fhand.write(
-        f"{generated_graph.number_of_nodes()} {generated_graph.number_of_edges()}\n"
-    )
-
-    for edge in generated_graph.edges():
-        fhand.write(f"{grid_to_node_number[edge[0]]} {grid_to_node_number[edge[1]]}\n")
-
-    fhand.close()
+    else:
+        print("Graph is not simple and connected.")
 
 
 def generate_incomplete_grid_graph(file_name : str, rows: int, cols: int, removal_prob: float):
@@ -131,20 +149,23 @@ def generate_incomplete_grid_graph(file_name : str, rows: int, cols: int, remova
 
     grid_to_node_number = {node: i for i, node in enumerate(generated_graph.nodes())}
 
-    fhand = open(file_name, "w")
+    if check_is_simple_and_connected(generated_graph):
+        fhand = open(file_name, "w")
+        fhand.write(
+            f"{generated_graph.number_of_nodes()} {generated_graph.number_of_edges()}\n"
+        )
+        for edge in generated_graph.edges():
+            fhand.write(f"{grid_to_node_number[edge[0]]} {grid_to_node_number[edge[1]]}\n")
+        fhand.close()
+    else:
+        generate_incomplete_grid_graph(file_name, rows, cols, removal_prob)
 
-    fhand.write(
-        f"{generated_graph.number_of_nodes()} {generated_graph.number_of_edges()}\n"
-    )
 
-    for edge in generated_graph.edges():
-        fhand.write(f"{grid_to_node_number[edge[0]]} {grid_to_node_number[edge[1]]}\n")
+for i in range(1, 11):
+    generate_random_graph(f"random_graph_{i}.txt", 100, 0.1)
+    generate_scale_free_graph(f"scale_free_graph_{i}.txt", 100, 2)
+    generate_random_d_regular_graph(f"random_d_regular_graph_{i}.txt", 100, 3)
+    generate_complete_grid_graph(f"complete_grid_graph_{i}.txt", 5, 5)
+    generate_incomplete_grid_graph(f"incomplete_grid_graph_{i}.txt", 5, 5, 0.3)
 
-    fhand.close()
 
-
-# generate_scale_free_graph("scale_free_graph.txt", 100, 2)
-# generate_random_graph("random_graph.txt", 100, 0.1)
-# generate_random_d_regular_graph("random_d_regular_graph.txt", 100, 3)
-# generate_complete_grid_graph("complete_grid_graph.txt", 5, 5)
-# generate_incomplete_grid_graph("incomplete_grid_graph.txt", 5, 5, 0.3)
