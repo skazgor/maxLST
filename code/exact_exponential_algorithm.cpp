@@ -349,7 +349,7 @@ int M_Algorithm(int root, Graph g){
     for(auto e: g.BN){
         int tmp = g.deg(e);
         if(g.deg(e) > mx){
-            mx = g.g[e].size();
+            mx = g.deg(e);
             mxv = e;
         }
     }
@@ -371,6 +371,10 @@ int M_Algorithm(int root, Graph g){
             if(g.FREE.find(x) != g.FREE.end()){
                 tmpar.push_back(x);
             }
+        }
+        if(tmpar.size() != 2){
+            cout << tmpar.size() << endl;
+            
         }
         assert(tmpar.size() == 2);
         int x1 = tmpar[0];
