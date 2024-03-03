@@ -1,0 +1,11 @@
+algorithm,file_name,number_of_nodes,number_of_leaf_nodes,time_taken
+Simulated_Annealing,random_graph_1.txt,10,6,0.05913710594177246
+Simulated_Annealing,random_graph_2.txt,60,39,0.9204452037811279
+Simulated_Annealing,random_graph_3.txt,110,73,2.8081488609313965
+Simulated_Annealing,random_graph_4.txt,160,107,6.424969434738159
+Simulated_Annealing,random_graph_5.txt,210,153,9.994261026382446
+Simulated_Annealing,random_graph_6.txt,260,196,15.261318683624268
+Simulated_Annealing,random_graph_7.txt,310,244,22.665714502334595
+Simulated_Annealing,random_graph_8.txt,360,296,29.534889936447144
+Simulated_Annealing,random_graph_9.txt,410,340,38.4073646068573
+Simulated_Annealing,random_graph_10.txt,460,397,49.47730779647827

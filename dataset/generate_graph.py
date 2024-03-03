@@ -170,7 +170,9 @@ def generate_incomplete_grid_graph(file_name : str, rows: int, cols: int, remova
 #     generate_incomplete_grid_graph(f"incomplete_grid_graph_{i}.txt", 5, 5, 0.3)
 
 
-for i in range(0, 31):
-    number_of_nodes = 10 + i
-    generate_random_graph(f"random_graph_{i+1}.txt", number_of_nodes, 0.1)
+
+number_of_nodes = [10 * i for i in range(1, 51, 5)]
+
+for i in range(len(number_of_nodes)):
+    generate_random_graph(f"random_graph_{i+1}.txt", number_of_nodes[i], 0.1)
 
