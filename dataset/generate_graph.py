@@ -34,7 +34,8 @@ def generate_random_graph(file_name: str, N: int, p: float):
         fhand.close()
     
     else:
-        print("Graph is not simple and connected.")
+        generate_random_graph(file_name, N, p)
+
 
 
 def generate_scale_free_graph(file_name: str, N: int, m: int):
@@ -161,11 +162,15 @@ def generate_incomplete_grid_graph(file_name : str, rows: int, cols: int, remova
         generate_incomplete_grid_graph(file_name, rows, cols, removal_prob)
 
 
-for i in range(1, 11):
-    generate_random_graph(f"random_graph_{i}.txt", 100, 0.1)
-    generate_scale_free_graph(f"scale_free_graph_{i}.txt", 100, 2)
-    generate_random_d_regular_graph(f"random_d_regular_graph_{i}.txt", 100, 3)
-    generate_complete_grid_graph(f"complete_grid_graph_{i}.txt", 5, 5)
-    generate_incomplete_grid_graph(f"incomplete_grid_graph_{i}.txt", 5, 5, 0.3)
+# for i in range(1, 11):
+#     generate_random_graph(f"random_graph_{i}.txt", 100, 0.1)
+#     generate_scale_free_graph(f"scale_free_graph_{i}.txt", 100, 2)
+#     generate_random_d_regular_graph(f"random_d_regular_graph_{i}.txt", 100, 3)
+#     generate_complete_grid_graph(f"complete_grid_graph_{i}.txt", 5, 5)
+#     generate_incomplete_grid_graph(f"incomplete_grid_graph_{i}.txt", 5, 5, 0.3)
 
+
+for i in range(10):
+    number_of_nodes = 10 + i*4
+    generate_random_graph(f"random_graph_{i+1}.txt", number_of_nodes, 0.1)
 
