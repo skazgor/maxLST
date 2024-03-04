@@ -171,8 +171,12 @@ def generate_incomplete_grid_graph(file_name : str, rows: int, cols: int, remova
 
 
 
-number_of_nodes = [10 * i for i in range(1, 51, 5)]
+number_of_nodes = [10 * i for i in range(1, 11)]
 
 for i in range(len(number_of_nodes)):
     generate_random_graph(f"random_graph_{i+1}.txt", number_of_nodes[i], 0.1)
+    generate_scale_free_graph(f"scale_free_graph_{i+1}.txt", number_of_nodes[i], 2)
+    generate_random_d_regular_graph(f"random_d_regular_graph_{i+1}.txt", number_of_nodes[i], 3)
+    generate_complete_grid_graph(f"complete_grid_graph_{i+1}.txt", int(number_of_nodes[i] /5 ) , 5)
+    generate_incomplete_grid_graph(f"incomplete_grid_graph_{i+1}.txt", int( number_of_nodes[i] /5 ), 5, 0.3)
 
